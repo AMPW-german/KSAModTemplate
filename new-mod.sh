@@ -78,9 +78,7 @@ if [[ "$MODE" == clone ]]; then
 fi
 
 # --- metadata ---------------------------------------------------------------
-GIT_NAME="$(git config user.name 2>/dev/null || true)"
-read -r -p "Author [${GIT_NAME:-none}]: " AUTHOR
-AUTHOR="${AUTHOR:-$GIT_NAME}"
+read -r -p "Author: " AUTHOR
 read -r -p "Company [${AUTHOR:-none}]: " COMPANY
 COMPANY="${COMPANY:-$AUTHOR}"
 read -r -p "Description [A Kitten Space Agency mod.]: " DESCRIPTION
@@ -95,9 +93,8 @@ GH_VIS="private"
 if [[ "$MODE" != inplace-foreign ]]; then
 	read -r -p "GitHub repository name [${MOD_NAME}]: " GH_REPO
 	GH_REPO="${GH_REPO:-$MOD_NAME}"
-	read -r -p "Repository visibility [private]: " GH_VIS
-	GH_VIS="$(printf '%s' "${GH_VIS:-private}" | tr '[:upper:]' '[:lower:]')"
-	[[ "$GH_VIS" == public ]] || GH_VIS="private"
+	read -r -p "Make the repository public? [y/N] " MAKE_PUBLIC
+	[[ "${MAKE_PUBLIC:-}" == [yY]* ]] && GH_VIS="public"
 fi
 
 # --- obtain the working copy -----------------------------------------------
@@ -134,8 +131,8 @@ sed -i \
 	-e "s|<Description>.*</Description>|<Description>$(esc "$DESCRIPTION")</Description>|" \
 	"$MOD_NAME/$MOD_NAME.csproj"
 
-# The template's own UNLICENSE must not leak into generated repos.
-rm -f UNLICENSE
+# Template-only files that must not leak into generated repos.
+rm -f UNLICENSE new-mod.sh
 
 cat > README.md <<EOF
 # $MOD_NAME
