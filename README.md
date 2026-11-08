@@ -2,7 +2,7 @@
 
 Template for a [Kitten Space Agency](https://kittenspaceagency.com) (KSA) **code mod**,
 built on [KSAModTools](https://github.com/AMPW-german/KSAModTools) (shared MSBuild
-config, KSA assembly resolution and CI actions) and
+config, KSA assembly resolution and CI actions, optional [GitHub app for auto updates on the default branch](https://github.com/apps/ksamodtools)) and
 [StarMap](https://github.com/StarMapLoader/StarMap) (the community code-mod loader).
 
 ## Quick start — it is enough to download the script and run it
@@ -11,8 +11,6 @@ config, KSA assembly resolution and CI actions) and
 curl -L https://raw.githubusercontent.com/AMPW-german/KSAModTemplate/main/new-mod.sh -o new-mod.sh
 bash new-mod.sh
 ```
-
-(If the template's default branch is not `main`, adjust the URL.)
 
 The script will ask for:
 
